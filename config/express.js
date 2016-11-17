@@ -3,6 +3,7 @@ var morgan = require('morgan');
 var compression = require('compression');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
+require('./config');
 
 module.exports = function(){
   var app = express();
@@ -13,7 +14,7 @@ module.exports = function(){
   }
     app.use(bodyParser.urlencoded({extended:true}));
     app.use(bodyParser.json());
-    app.use(methodOverride())
+    app.use(methodOverride());
   require('../app/routes/core.routes.server.js')(app);
   return app;
 }
