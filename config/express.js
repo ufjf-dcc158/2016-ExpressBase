@@ -1,7 +1,19 @@
 var express = require("express");
+var morgan = require('morgan');
+var compression = require('compression');
+var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
 
 module.exports = function(){
   var app = express();
+  if(process.env.NODE_ENV == "devel"){
+    app.use(morgan('dev'));
+  }else if(process.env.NODE_ENV == "prod"){
+    app.use(compression());
+  }
+    app.use(bodyParser.urlencoded({extended:true}));
+    app.use(bodyParser.json());
+    app.use(methodOverride())
   require('../app/routes/core.routes.server.js')(app);
   return app;
 }
